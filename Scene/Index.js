@@ -2,7 +2,9 @@
  * Created by KoJong on 2017-07-15.
  */
 
-
+import {Router,Scene, Actions} from "react-native-router-flux";
+import SelectBoard from './SelectBoard';
+import Modal from 'react-native-modal'
 import React, { Component } from 'react';
 import {
     StyleSheet,
@@ -11,23 +13,15 @@ import {
     Platform,
     TouchableOpacity,
     Image,
-    TextInput
+    TextInput,
 } from 'react-native';
-
-import {Router,Scene, Actions} from "react-native-router-flux";
-import SelectBoard from './SelectBoard';
-import prompt from 'react-native-prompt';
-
-
-global.selectedContacts = null;   //random 30 quizlist
-global.directSelectedContacts=null; //directselect quizlist
-global.allContacts = null; //all contacts list
 
 class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            rightButton: false
+            rightButton: false,
+            isModalVisible : false
         }
     }
 
@@ -43,14 +37,55 @@ class App extends Component {
                         key="SelectBoard"
                         component={SelectBoard}
                         sceneStyle={{marginTop: 0}}
-                        hideNavBar={true}
+                        renderRightButton = { ()=>this.modalTest("게시판 추가")}
                         initial={true}
                     />
                 </Scene>
             </Router>
         )
     }
+    _showModal = () => this.setState({ isModalVisible: true })
+    _hideModal = () => this.setState({ isModalVisible: false })
+
+    Insert(text){
+        return(
+            <TouchableOpacity
+                onPress={() => this.modalTest(true)}
+                style={{justifyContent:'center', width:100,bottom:11,height:40}}>
+                <Text style={{color:'white', fontSize:16, textAlign:'right'}}>{text}</Text>
+            </TouchableOpacity>
+        )
+    }
+
+    modalTest(text){
+        console.log("왜안되니", text)
+        return(
+            <View>
+                <TouchableOpacity
+                    onPress = {() => this._showModal()}>
+                    <Text style={{color:'white', fontSize:16, textAlign:'right'}}>{text}</Text>
+                </TouchableOpacity>
+
+                <Modal isVisible={this.state.isModalVisible}>
+                    <View style ={{}}>
+                        <Text style={{backgroundColor : "#fff", fontSize :30, }}>게시판 추가</Text>
+                        <View style ={{flexDirection:"row" }}>
+                            <Text style={{backgroundColor : "#fff", fontSize :16}}>게시판 URL</Text>
+                            <TextInput
+                                style ={{backgroundColor :"#fff", width:300}} />
+                        </View>
+                        <View style ={{flexDirection:"row"}}>
+                            <Text style={{backgroundColor : "#fff", fontSize :16}}>게시판 이름</Text>
+                            <TextInput
+                                style ={{backgroundColor :"#fff", width:300}} />
+                        </View>
+                    </View>
+                </Modal>
+            </View>
+        )
+    }
 }
+
 const styles = StyleSheet.create({
     navBar:{
         backgroundColor : "#00a5f7",
