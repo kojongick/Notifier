@@ -4,7 +4,6 @@
 import React, { Component } from 'react'
 import BottomNavigation, { Tab } from 'react-native-material-bottom-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import Modal from 'react-native-modal'
 
 import {
     StyleSheet,
@@ -25,25 +24,10 @@ class SelectBoard extends Component {
             isModalVisible : false
         }
     }
-    _showModal = () => this.setState({ isModalVisible: true })
-
-    _hideModal = () => this.setState({ isModalVisible: false })
 
     render() {
         return (
         <View style={{ flex: 1 }}>
-
-            <TouchableOpacity onPress={this._showModal}>
-                <Text>Show Modal</Text>
-            </TouchableOpacity>
-            <Modal isVisible={this.state.isModalVisible}>
-                <View>
-                    <TextInput
-                        style ={{backgroundColor :"#fff"}} />
-                    <TextInput
-                    style ={{backgroundColor :"#fff"}} />
-                </View>
-            </Modal>
 
             <BottomNavigation
                 labelColor="white"

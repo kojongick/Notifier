@@ -21,7 +21,9 @@ class App extends Component {
         super(props)
         this.state = {
             rightButton: false,
-            isModalVisible : false
+            isModalVisible : false,
+            BoardName: "",
+            BoardURL:"",
         }
     }
 
@@ -58,7 +60,6 @@ class App extends Component {
     }
 
     modalTest(text){
-        console.log("왜안되니", text)
         return(
             <View>
                 <TouchableOpacity
@@ -68,18 +69,30 @@ class App extends Component {
 
                 <Modal isVisible={this.state.isModalVisible}>
                     <View style ={{}}>
-                        <Text style={{backgroundColor : "#fff", fontSize :30, }}>게시판 추가</Text>
+                        <Text style={{backgroundColor : "#fff", fontSize :30,textAlign : "center" }}>게시판 추가</Text>
                         <View style ={{flexDirection:"row" }}>
                             <Text style={{backgroundColor : "#fff", fontSize :16}}>게시판 URL</Text>
                             <TextInput
-                                style ={{backgroundColor :"#fff", width:300}} />
+                                style ={{backgroundColor :"#fff", width:300}}
+                                onChangeText={(text)=>{this.setState({BoardURL:text})}}/>
                         </View>
+
                         <View style ={{flexDirection:"row"}}>
                             <Text style={{backgroundColor : "#fff", fontSize :16}}>게시판 이름</Text>
                             <TextInput
-                                style ={{backgroundColor :"#fff", width:300}} />
+                                style ={{backgroundColor :"#fff", width:300}}
+                                onChangeText={(text)=>{this.setState({BoardName:text})}}/>
                         </View>
                     </View>
+
+                    <View style ={{backgroundColor : "#000"}}>
+                        <TouchableOpacity
+                            onPress = {() => this._hideModal()}>
+                            <Text style={{color:'white', fontSize:16, textAlign:'center'}}>저장</Text>
+                        </TouchableOpacity>
+                    </View>
+
+
                 </Modal>
             </View>
         )
